@@ -62,9 +62,14 @@ script:
   - export LANG=C.UTF-8
   - KITCHEN_YAML=.kitchen.docker.yml kitchen verify ${suite}-${distribution}-${version//./}
 
-#after_failure:
-#  - "systemctl -l --no-pager status"
-#  - "journalctl -xe --no-pager"
+after_failure:
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'systemctl -l --no-pager status'
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'journalctl -xe --no-pager'
+
+after_script:
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'cat /opt/SumoCollector/logs/collector.log'
+  # Clean up
+  - KITCHEN_YAML=.kitchen.docker.yml  kitchen destroy default-${distribution}-${version//./}
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
