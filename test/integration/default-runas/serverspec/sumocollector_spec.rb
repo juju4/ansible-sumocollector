@@ -30,7 +30,7 @@ end
 
 describe file('/opt/SumoCollector/logs/collector.log') do
   its(:size) { should > 0 }
-  its(:content) { should match /com.sumologic.util.scala.configuration.ExplicitModuleConfigurationFactory - Loaded configuration file/ }
+  its(:content) { should match /com.sumologic.util.scala.configuration.AssemblyBootstrapConfigurationFactory - Loaded configuration file:/ }
 ## will have errors as not providing credentials
 #  its(:content) { should_not match /ERROR/ }
   let(:sudo_options) { '-u root -H' }
