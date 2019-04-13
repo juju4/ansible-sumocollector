@@ -5,4 +5,3 @@
     - sumologic_collector_user: _sumo
   roles:
     - wgregorian.sumocollector
-

@@ -9,11 +9,10 @@ else
 rolesdir=$(dirname $0)/..
 fi
 
-#[ ! -d $rolesdir/juju4.redhat-epel ] && git clone https://github.com/juju4/ansible-redhat-epel $rolesdir/juju4.redhat-epel
-[ ! -d $rolesdir/ernestas-poskus.docker ] && git clone https://github.com/ernestas-poskus/ansible-role-docker.git $rolesdir/ernestas-poskus.docker
+#[ ! -d $rolesdir/juju4.redhat_epel ] && git clone https://github.com/juju4/ansible-redhat-epel $rolesdir/juju4.redhat_epel
+[ ! -d $rolesdir/juju4.docker ] && git clone https://github.com/juju4/ansible-role-docker.git $rolesdir/juju4.docker
 ## galaxy naming: kitchen fails to transfer symlink folder
 [ ! -e $rolesdir/wgregorian.sumocollector ] && cp -R $rolesdir/ansible-sumocollector $rolesdir/wgregorian.sumocollector
 
 ## don't stop build on this script return code
 true
-

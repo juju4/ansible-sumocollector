@@ -8,6 +8,8 @@
   tags:
    - sumologic
    - sumo-perf
+  register: pkg_result
+  until: pkg_result is success
 
 - name: template cron for sysstat
   template:

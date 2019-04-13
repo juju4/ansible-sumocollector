@@ -4,6 +4,5 @@
 #  vars:
 #    - a:
   roles:
-    - ernestas-poskus.docker
+    - juju4.docker
     - wgregorian.sumocollector
-

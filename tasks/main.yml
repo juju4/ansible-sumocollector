@@ -31,7 +31,7 @@
     - sumo-check-disk.sh
 
 - name: 'Optionally stop sumo'
-  shell: "{{ sumologic_collector_root }}/collector stop"
+  command: "{{ sumologic_collector_root }}/collector stop"
   tags: [sumologic, sumologic-collector]
   when: sumologic_remove_tar_install == "yes"
   ignore_errors: yes
@@ -135,7 +135,10 @@
    - { n: 'net.core.wmem_max', v: 8388608 }
    - { n: 'net.core.rmem_max', v: 8388608 }
   tags: [sumologic, sumologic-collector]
-  when: (ansible_virtualization_type is not defined or (ansible_virtualization_type != "lxc" and ansible_virtualization_type != "docker"))
+  when: >
+    (ansible_virtualization_type is not defined or
+      (ansible_virtualization_type != "lxc" and ansible_virtualization_type != "docker")
+    )
 
 - name: 'Ensure collector is running'
   service:
@@ -147,12 +150,13 @@
   tags: [sumologic, sumologic_docker]
 
 - name: 'Force restart SumoCollector'
-  shell: "{{ sumologic_collector_root }}/collector restart"
+  command: "{{ sumologic_collector_root }}/collector restart"
   tags: [sumologic, sumologic-collector, sumologic_force_restart]
   when: (sumologic_force_restart == "yes") and (sumologic_install_method != "docker")
 
 - name: 'Force restart SumoCollector docker'
-  shell: echo "restarting docker"
+  command: echo "restarting docker"
+  changed_when: false
   tags: [sumologic, sumologic-collector, sumologic_force_restart]
   when: (sumologic_force_restart == "yes") and (sumologic_install_method == "docker")
   notify: 'Restart SumoCollector'
@@ -164,6 +168,8 @@
   when: ansible_os_family == "Debian"
   tags: sumologic
   notify: Restart SumoCollector
+  register: pkg_result
+  until: pkg_result is success
 
 - name: 'Install SumoCollector yum'
   yum:

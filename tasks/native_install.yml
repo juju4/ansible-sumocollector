@@ -1,12 +1,16 @@
+---
 # native_install.yml
 
-## FIXME!
+- name: Retrieve sumo installer
+  get_url:
+    url: https://collectors.us2.sumologic.com/rest/download/linux/64
+    dest: /root/SumoCollector.sh
+    mode: '0700'
+
 - name: Install sumo with sumo installer
   shell: >
-    wget "https://collectors.us2.sumologic.com/rest/download/linux/64"
-        -O SumoCollector.sh &&
-        sudo chmod +x SumoCollector.sh &&
-        sudo ./SumoCollector.sh -q -Vsumo.token_and_url={{ sumologic_token_installer }}
+    ./SumoCollector.sh -q -Vsumo.token_and_url={{ sumologic_token_installer }}
+  become: yes
   tags: [sumologic, sumologic_token_installer]
   when: sumologic_token_installer is defined
 
@@ -32,6 +36,8 @@
   when: ( sumologic_collector_deb_check.rc == 1 ) and ( ansible_os_family == "Debian" )
   tags: sumologic
   notify: Restart SumoCollector
+  register: pkg_result
+  until: pkg_result is success
 
 - name: 'Check for SumoCollector on RedHat'
   command: yum list *sumo_collector*
@@ -57,6 +63,8 @@
   when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" )
   tags: [sumologic, sumologic_force_restart]
   notify: Restart SumoCollector
+  register: pkg_result
+  until: pkg_result is success
 
 - include: native_runas.yml
   when: sumologic_collector_user != 'root'

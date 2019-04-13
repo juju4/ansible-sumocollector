@@ -33,4 +33,3 @@
     name: journalctl_syslog
     state: restarted
   tags: [sumologic, sumologic-collector]
-

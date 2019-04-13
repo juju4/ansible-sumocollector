@@ -4,3 +4,5 @@
   package:
     name: "{{ sumocollector_pkg_deps }}"
     state: present
+  register: pkg_result
+  until: pkg_result is success
