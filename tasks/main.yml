@@ -19,7 +19,7 @@
 - name: 'Template SumoCollector files'
   template:
     src: "{{ item }}"
-    dest: "{{ sumologic_config_dir }}/{{item}}"
+    dest: "{{ sumologic_config_dir }}/{{ item }}"
     mode: 0700
     owner: "{{ sumologic_config_dir_owner }}"
   tags: [sumologic, sumologic-collector]
@@ -31,7 +31,7 @@
     - sumo-check-disk.sh
 
 - name: 'Optionally stop sumo'
-  shell: "{{ sumologic_collector_root}}/collector stop"
+  shell: "{{ sumologic_collector_root }}/collector stop"
   tags: [sumologic, sumologic-collector]
   when: sumologic_remove_tar_install == "yes"
   ignore_errors: yes
@@ -88,14 +88,14 @@
     dest: /etc/sumologic-collector.json
   tags: [sumologic, sumologic-collector]
   notify: Restart SumoCollector
-  when: sumologic_single_source_file == "yes"
+  when: sumologic_single_source_file
 
 - name: 'Ensure sumo sources directory exists'
   file:
     state: directory
     dest: "{{ sumologic_sources_dir }}"
   tags: [sumologic, sumologic-collector]
-  when: sumologic_single_source_file != "yes"
+  when: not sumologic_single_source_file
 
 - name: 'Ensure sumo temp data and logs dir exists'
   file:
@@ -110,7 +110,7 @@
         dest: "{{ sumologic_sources_dir }}"
       tags: [sumologic, sumologic-collector]
       with_fileglob: ../templates/sources/*
-  when: sumologic_single_source_file != "yes" and sumologic_single_source_file != true
+  when: not sumologic_single_source_file and not sumologic_single_source_file
 
 - include: linux_performance.yml
   tags: [sumologic, sumologic-collector]

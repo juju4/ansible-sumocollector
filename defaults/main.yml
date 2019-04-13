@@ -12,8 +12,8 @@ sumologic_config_dir_owner: root
 # yum means native. valid for rpm or deb install
 sumologic_install_method: yum
 # consume multiple sources from /etc/sumo/sumo.d
-#sumologic_single_source_file: "no"
-sumologic_single_source_file: yes
+#sumologic_single_source_file: false
+sumologic_single_source_file: true
 syslog_units_directory: /usr/lib/systemd/system
 sumologic_docker_systemd_with_consul: false
 sumologic_collector_service_name: "{% if sumologic_install_method == 'yum' %}collector{% else %}sumologic-collector{% endif %}"

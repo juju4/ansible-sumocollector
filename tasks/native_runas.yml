@@ -33,11 +33,11 @@
         regexp: '^#RUN_AS_USER=.*'
         replace: "RUN_AS_USER={{ sumologic_collector_user }}"
         backup: yes
-    
+
     - name: Install collector service
       command: "{{ sumologic_collector_root }}/collector install"
       args:
         creates: /etc/init.d/collector
       notify:
         - Restart SumoCollector
-  when: svcfile.stdout == ''
+  when: not svcfile.stdout

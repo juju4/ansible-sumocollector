@@ -5,7 +5,7 @@
 - name: install sysstat
   yum:
     name: sysstat
-  tags: 
+  tags:
    - sumologic
    - sumo-perf
 
@@ -13,6 +13,6 @@
   template:
     src: etc_cron.d_sysstat
     dest: /etc/cron.d/sysstat
-  tags: 
+  tags:
     - sumologic
     - sumo-perf
