@@ -71,9 +71,10 @@ sumologic_collector_force_timezone: "false"
 
 ## Just for testing
 deployment_id: ANSIBLETEST
-sumologic_collector_default_log_path:
-  - name: "SYSTEM LOG"
-    path: "/var/log/*log"
-    use_multiline: false
-    category: "EXAMPLE"
+sumologic_collector_default_log_path: []
+#sumologic_collector_default_log_path:
+#  - name: "SYSTEM LOG"
+#    path: "/var/log/*log"
+#    use_multiline: false
+#    category: "EXAMPLE"
 sumologic_collector_application_log_path: []
