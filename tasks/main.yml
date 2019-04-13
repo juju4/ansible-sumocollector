@@ -79,7 +79,7 @@
 
 - name: 'Define initial SumoCollector sources'
   set_fact:
-    sumologic_collector_log_paths: "{{ sumologic_collector_default_log_path|list + sumologic_collector_application_log_path|list }}"
+    sumologic_collector_log_paths: "{{ sumologic_collector_default_log_path|list|default([]) + sumologic_collector_application_log_path|list|default([]) }}"
   tags: [sumologic, sumologic-collector]
 
 - name: 'Create collector configuration'
