@@ -8,7 +8,7 @@ SUMO_ACCESS_ID="{{ sumologic_collector_accessid }}"
 SUMO_ACCESS_KEY="{{ sumologic_collector_accesskey }}"
 # also defined in /etc/sumo/sumo.conf
 SUMO_COLLECTOR_NAME={{ inventory_hostname }}
-{% if sumologic_single_source_file %}
+{% if sumologic_single_source_file == "yes" %}
 SUMO_SOURCES_JSON=/etc/sumo/sumologic-collector.json
 {% else %}
 SUMO_SOURCES_JSON=/etc/sumo/sumo.d 

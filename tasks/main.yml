@@ -19,7 +19,7 @@
 - name: 'Template SumoCollector files'
   template:
     src: "{{ item }}"
-    dest: "{{ sumologic_config_dir }}/{{ item }}"
+    dest: "{{ sumologic_config_dir }}/{{item}}"
     mode: 0700
     owner: "{{ sumologic_config_dir_owner }}"
   tags: [sumologic, sumologic-collector]
@@ -79,7 +79,7 @@
 
 - name: 'Define initial SumoCollector sources'
   set_fact:
-    sumologic_collector_log_paths: "{{ sumologic_collector_default_log_path|list|default([]) + sumologic_collector_application_log_path|list|default([]) }}"
+    sumologic_collector_log_paths: "{{ sumologic_collector_default_log_path|list + sumologic_collector_application_log_path|list }}"
   tags: [sumologic, sumologic-collector]
 
 - name: 'Create collector configuration'
@@ -88,14 +88,14 @@
     dest: /etc/sumologic-collector.json
   tags: [sumologic, sumologic-collector]
   notify: Restart SumoCollector
-  when: sumologic_single_source_file
+  when: sumologic_single_source_file == "yes"
 
 - name: 'Ensure sumo sources directory exists'
   file:
     state: directory
     dest: "{{ sumologic_sources_dir }}"
   tags: [sumologic, sumologic-collector]
-  when: not sumologic_single_source_file
+  when: sumologic_single_source_file != "yes"
 
 - name: 'Ensure sumo temp data and logs dir exists'
   file:
@@ -110,7 +110,7 @@
         dest: "{{ sumologic_sources_dir }}"
       tags: [sumologic, sumologic-collector]
       with_fileglob: ../templates/sources/*
-  when: not sumologic_single_source_file and not sumologic_single_source_file
+  when: sumologic_single_source_file != "yes" and sumologic_single_source_file != true
 
 - include: linux_performance.yml
   tags: [sumologic, sumologic-collector]

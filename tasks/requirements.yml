@@ -2,7 +2,8 @@
 
 - name: ensure sumo collector requirements packages are present
   package:
-    name: "{{ sumocollector_pkg_deps }}"
+    name: "{{ item }}"
     state: present
   register: pkg_result
   until: pkg_result is success
+  with_items: "{{ sumocollector_pkg_deps }}"
