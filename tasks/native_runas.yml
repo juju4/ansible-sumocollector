@@ -40,4 +40,4 @@
         creates: /etc/init.d/collector
       notify:
         - Restart SumoCollector
-  when: svcfile.stdout == ''
+  when: not svcfile.stdout
