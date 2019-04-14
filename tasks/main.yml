@@ -106,7 +106,7 @@
 - block:
     - name: 'Template sources'
       template:
-        src: ../templates/sources/{{ item | basename }}
+        src: sources/{{ item | basename }}
         dest: "{{ sumologic_sources_dir }}"
       tags: [sumologic, sumologic-collector]
       with_fileglob: ../templates/sources/*

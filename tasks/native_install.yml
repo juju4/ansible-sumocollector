@@ -8,7 +8,7 @@
     mode: '0700'
 
 - name: Install sumo with sumo installer
-  shell: >
+  command: >
     ./SumoCollector.sh -q -Vsumo.token_and_url={{ sumologic_token_installer }}
   become: yes
   tags: [sumologic, sumologic_token_installer]
