@@ -2,18 +2,18 @@
 # docker_install.yml
 
 # - set_fact:
-#     updated_sumologic_docker_options: "{{sumologic_docker_options}} -v /var/log/sa:/var/log/sa"
+#     updated_sumologic_docker_options: "{{ sumologic_docker_options }} -v /var/log/sa:/var/log/sa"
 #   when: sumologic_do_sysstat == "yes"
 #   tags:
 #     - sumologic
 #     - sumologic_docker
 
-# - debug: msg="{{updated_sumologic_docker_options}}"
+# - debug: msg="{{ updated_sumologic_docker_options }}"
 #   tags:
 #     - sumologic
 #     - sumologic_docker
 
-- name: install systemd unit for sumologic 
+- name: install systemd unit for sumologic
   template:
     src: sumologic-collector.service
     dest: "{{ syslog_units_directory }}/sumologic-collector.service"
@@ -22,7 +22,7 @@
     - Restart SumoCollector
   tags: [sumologic, sumologic_docker]
 
-- name: install systemd unit for journalctl to customize docker jounald logs 
+- name: install systemd unit for journalctl to customize docker jounald logs
   template:
     src: journalctl_syslog.service
     dest: "{{ syslog_units_directory }}/journalctl_syslog.service"
@@ -33,7 +33,7 @@
   when: sumologic_install_journal_syslog_service == "yes"
 
 - name: start systemd unit for sumologic-collector
-  service: 
+  service:
     name: "{{ item }}"
     state: started
     enabled: yes
@@ -42,7 +42,7 @@
   tags: [sumologic, sumologic_docker]
 
 - name: start systemd unit for journalctl_syslog
-  service: 
+  service:
     name: "{{ item }}"
     state: started
     enabled: yes
@@ -52,7 +52,7 @@
   when: sumologic_install_journal_syslog_service == "yes"
 
 - name: force stop journalctl_syslog service
-  service: 
+  service:
     name: "{{ item }}"
     state: stopped
     enabled: no

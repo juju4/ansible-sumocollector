@@ -19,7 +19,7 @@
 - name: 'Template SumoCollector files'
   template:
     src: "{{ item }}"
-    dest: "{{ sumologic_config_dir }}/{{item}}"
+    dest: "{{ sumologic_config_dir }}/{{ item }}"
     mode: 0700
     owner: "{{ sumologic_config_dir_owner }}"
   tags: [sumologic, sumologic-collector]

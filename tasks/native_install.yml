@@ -58,7 +58,7 @@
   yum:
     name: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
     state: present
-  when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" ) 
+  when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" )
   tags: [sumologic, sumologic_force_restart]
   notify: Restart SumoCollector
   register: pkg_result
