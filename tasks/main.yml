@@ -110,7 +110,7 @@
         dest: "{{ sumologic_sources_dir }}"
       tags: [sumologic, sumologic-collector]
       with_fileglob: ../templates/sources/*
-  when: sumologic_single_source_file != "yes" and sumologic_single_source_file != true
+  when: sumologic_single_source_file != "yes" and not sumologic_single_source_file
 
 - include: linux_performance.yml
   tags: [sumologic, sumologic-collector]

@@ -12,7 +12,7 @@
 # attempt to avoid collectore uuid suffixes caused when
 # restart happens before sumo cloud recognizes old collector is gone.
 - name: Restart SumoCollector wait
-  pause: 
+  pause:
     seconds: 10
   tags: [sumologic, sumologic-collector]
   notify: Restart SumoCollector start
