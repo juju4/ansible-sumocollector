@@ -10,9 +10,10 @@
 - name: Install sumo with sumo installer
   command: >
     ./SumoCollector.sh -q -Vsumo.token_and_url={{ sumologic_token_installer }}
+      {% if sumologic_collector_ephemeral is defined and sumologic_collector_ephemeral %} -Vephemeral{% endif %}
   become: yes
   tags: [sumologic, sumologic_token_installer]
-  when: sumologic_token_installer is defined
+  when: sumologic_token_installer is defined and not (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
 
 - name: 'Check for SumoCollector on Debian'
   command: dpkg-query -l sumocollector
