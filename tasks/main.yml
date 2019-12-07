@@ -164,7 +164,7 @@
 - name: 'Install SumoCollector apt'
   apt:
     deb: '{{ sumologic_installer_remote_file }}'
-    state: installed
+    state: present
   when: ansible_os_family == "Debian"
   tags: sumologic
   notify: Restart SumoCollector
