@@ -1,4 +1,4 @@
-# "{{ ansible_managed }}"
+{{ ansible_managed | comment }}
 
 # Run system activity accounting tool every 2 minutes
 */2 * * * * root /usr/lib64/sa/sa1 -S DISK 1 1

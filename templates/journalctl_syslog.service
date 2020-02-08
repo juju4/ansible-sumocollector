@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 # journalctl_syslog.service
 # /etc/systemd/system/journalctl_syslog.service
 

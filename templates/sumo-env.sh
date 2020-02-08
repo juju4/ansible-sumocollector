@@ -1,6 +1,5 @@
 # sumo-env.sh
-
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 # For use with docker sumologic container
 

@@ -1,5 +1,6 @@
 #!/bin/sh
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
+
 FIRST=true
 echo -n {\"disk_util_percent\": {
 df -H | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print "\""$1"\"" ": " $5 }' | sed s/%// | while read output;

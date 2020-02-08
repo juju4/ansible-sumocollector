@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 {% if sumologic_collector_name is defined %}
 name={{ sumologic_collector_name }}

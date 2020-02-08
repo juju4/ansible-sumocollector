@@ -1,5 +1,5 @@
+{{ ansible_managed | comment }}
 # etc_cron.d_disk
-# "{{ ansible_managed }}"
 
 # Run df summary every minute
 * * * * * root /etc/sumo/sumo-check-disk.sh | /usr/bin/ncat localhost 514
