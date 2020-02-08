@@ -60,6 +60,8 @@ sumologic_collector_clobber: "true"
 # If a Collector is flagged as ephemeral, the Collector will be deleted automatically after being offline for 12 hours
 # https://help.sumologic.com/Send_Data/Installed_Collectors/05Reference_Information_for_Collector_Installation/11Set_a_Collector_as_Ephemeral
 #sumologic_collector_ephemeral: false
+# Only if shell script/native install
+#sumologic_collector_shell_args: "-Vdescription='My Collector by XYZ for env ABC'"
 
 # Legacy vars from sumo.conf.  Possibly port to user.properties.
 sumologic_collector_source_template: "collector.json.j2"
