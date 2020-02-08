@@ -6,6 +6,8 @@
     url: https://collectors.us2.sumologic.com/rest/download/linux/64
     dest: /root/SumoCollector.sh
     mode: '0700'
+  register: dl_result
+  until: dl_result is success
 
 - name: Install sumo with sumo installer
   command: >
