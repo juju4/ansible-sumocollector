@@ -21,6 +21,17 @@ describe service('collector') do
 #  it { should be_running }
 end
 
+describe process("wrapper") do
+  its(:user) { should eq "root" }
+  its(:args) { should match / wrapper.displayname=SumoLogic/ }
+  its(:count) { should eq 1 }
+end
+describe process("java") do
+  its(:user) { should eq "root" }
+  its(:args) { should match /sumologic/ }
+  its(:count) { should eq 1 }
+end
+
 describe file('/opt/SumoCollector/config/user.properties') do
   its(:size) { should > 0 }
   its(:content) { should match /accessid/ }
@@ -47,3 +58,9 @@ end
 #  its(:exit_status) { should eq 0 }
 #end
 
+# https://help.sumologic.com/03Send-Data/Installed-Collectors/05Reference-Information-for-Collector-Installation/01Test-Connectivity-for-Sumo-Logic-Collectors
+describe command('curl -i https://collectors.sumologic.com') do
+  its(:stdout) { should match /Tweep/ }
+  its(:stderr) { should match /^$/ }
+  its(:exit_status) { should eq 0 }
+end
