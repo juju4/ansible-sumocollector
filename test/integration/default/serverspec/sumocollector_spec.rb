@@ -21,16 +21,17 @@ describe service('collector') do
 #  it { should be_running }
 end
 
-describe process("wrapper") do
-  its(:user) { should eq "root" }
-  its(:args) { should match / wrapper.displayname=SumoLogic/ }
-  its(:count) { should eq 1 }
-end
-describe process("java") do
-  its(:user) { should eq "root" }
-  its(:args) { should match /sumologic/ }
-  its(:count) { should eq 1 }
-end
+# Only-valid post-registration. NOK inside CI/CD without registration
+#describe process("wrapper") do
+#  its(:user) { should eq "root" }
+#  its(:args) { should match /wrapper.displayname=SumoLogic/ }
+#  its(:count) { should eq 1 }
+#end
+#describe process("java") do
+#  its(:user) { should eq "root" }
+#  its(:args) { should match /sumologic/ }
+#  its(:count) { should eq 1 }
+#end
 
 describe file('/opt/SumoCollector/config/user.properties') do
   its(:size) { should > 0 }
@@ -59,8 +60,10 @@ end
 #end
 
 # https://help.sumologic.com/03Send-Data/Installed-Collectors/05Reference-Information-for-Collector-Installation/01Test-Connectivity-for-Sumo-Logic-Collectors
-describe command('curl -i https://collectors.sumologic.com') do
+describe command('curl -iv https://collectors.sumologic.com') do
   its(:stdout) { should match /Tweep/ }
-  its(:stderr) { should match /^$/ }
+  its(:stderr) { should match /200 OK/ }
+  its(:stderr) { should match /SSL certificate verify ok./ }
+  its(:stderr) { should match /subjectAltName: host "collectors.sumologic.com" matched cert's "collectors.sumologic.com"/ }
   its(:exit_status) { should eq 0 }
 end
