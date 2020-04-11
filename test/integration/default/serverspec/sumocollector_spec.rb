@@ -63,7 +63,7 @@ end
 describe command('curl -iv https://collectors.sumologic.com') do
   its(:stdout) { should match /Tweep/ }
   its(:stderr) { should match /200 OK/ }
-  its(:stderr) { should match /SSL certificate verify ok./ }
-  its(:stderr) { should match /subjectAltName: host "collectors.sumologic.com" matched cert's "collectors.sumologic.com"/ }
+  #its(:stderr) { should match /SSL certificate verify ok./ }
+  #its(:stderr) { should match /subjectAltName: host "collectors.sumologic.com" matched cert's "collectors.sumologic.com"/ }
   its(:exit_status) { should eq 0 }
 end
