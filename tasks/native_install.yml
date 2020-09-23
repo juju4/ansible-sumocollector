@@ -7,7 +7,9 @@
     dest: /root/SumoCollector.sh
     mode: '0700'
   register: dl_result
+  when: sumologic_token_installer is defined
   until: dl_result is success
+
 
 - name: Install sumo with sumo installer
   command: >
@@ -61,6 +63,7 @@
   yum:
     name: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
     state: present
+    disable_gpg_check: true
   when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" )
   tags: [sumologic, sumologic_force_restart]
   notify: Restart SumoCollector

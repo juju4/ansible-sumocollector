@@ -70,12 +70,12 @@
   when: ansible_os_family == "Debian"
   tags: sumologic
 
-- name: 'Download SumoCollector redhat'
-  get_url:
-    url: '{{ sumocollector_installer_rpm }}'
-    dest: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
-  when: ansible_os_family == "RedHat"
-  tags: sumologic
+# - name: 'Download SumoCollector redhat'
+#   get_url:
+#     url: '{{ sumocollector_installer_rpm }}'
+#     dest: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
+#   when: ansible_os_family == "RedHat"
+#   tags: sumologic
 
 - name: 'Define initial SumoCollector sources'
   set_fact:
