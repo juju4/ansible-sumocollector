@@ -77,7 +77,12 @@ after_failure:
   - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'journalctl -xe --no-pager'
 
 after_script:
-  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'cat /opt/SumoCollector/logs/collector.log'
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'sudo cat /opt/SumoCollector/config/user.properties'
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'sudo cat /opt/SumoCollector/logs/collector.log'
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'rpm -Kv /tmp/sumo_collector.rpm'
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'apt-get install -y debsig-verify dpkg-sig'
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'debsig-verify /tmp/sumocollector.deb'
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'dpkg-sig --verify /tmp/sumocollector.deb'
   # Clean up
   - KITCHEN_YAML=.kitchen.docker.yml  kitchen destroy default-${distribution}-${version//./}
 
