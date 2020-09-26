@@ -61,6 +61,7 @@
   yum:
     name: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
     state: present
+    disable_gpg_check: "{{ sumologic_installer_rpm_disablegpgcheck | default(false) }}"
   when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" )
   tags: [sumologic, sumologic_force_restart]
   notify: Restart SumoCollector
