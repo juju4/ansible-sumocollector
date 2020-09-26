@@ -27,6 +27,7 @@ env:
   - distribution: centos
     version: 8
     suite: default-runas
+    ANSIBLE_EXTRA_FLAGS: "'-e sumologic_installer_rpm_disablegpgcheck=true'"
   - distribution: ubuntu
     version: 20.04
     suite: default-runas
