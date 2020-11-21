@@ -67,6 +67,8 @@
   get_url:
     url: '{{ sumocollector_installer_download }}'
     dest: '{{ sumologic_installer_remote_file }}'
+  register: dl_result
+  until: dl_result is success
   when: ansible_os_family == "Debian"
   tags: sumologic
 
@@ -74,6 +76,8 @@
   get_url:
     url: '{{ sumocollector_installer_rpm }}'
     dest: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
+  register: dl_result
+  until: dl_result is success
   when: ansible_os_family == "RedHat"
   tags: sumologic
 
