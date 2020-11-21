@@ -3,17 +3,17 @@
 - name: Download Sumologic collector
   ansible.windows.win_get_url:
     url: https://collectors.sumologic.com/rest/download/win64
-    dest: "{{ sumo_win_temp | default('C:\Windows\Temp') }}\\SumoCollector.exe"
+    dest: "{{ sumo_win_temp | default('C:\\Windows\\Temp') }}\\SumoCollector.exe"
 
 - name: Upload sources.json
   win_template:
     src: "{{ sumo_sources }}.j2"
-    dest: "{{ sumo_win_temp | default('C:\Windows\Temp') }}\\{{ sumo_sources | win_basename }}"
+    dest: "{{ sumo_win_temp | default('C:\\Windows\\Temp') }}\\{{ sumo_sources | win_basename }}"
   when: sumo_sources is defined and sumo_sources|string
 
 # https://support.sumologic.com/hc/en-us/articles/360026685613-Collector-install-fails-with-missing-credentials-when-using-install-commands-in-a-PowerShell-script-on-Windows
 - name: Install Sumologic collector
-  win_shell: "Start-Process -Wait -FilePath {{ sumo_win_temp | default('C:\Windows\Temp') }}\\SumoCollector.exe -ArgumentList \"-q -console -Vsumo.token_and_url={{ sumo_token }}{% if sumo_sources|string %} -Vsources={{ sumo_win_temp | default('C:\Windows\Temp') }}\\{{ sumo_sources | win_basename }}{% endif %} {% if sumologic_collector_shell_args is defined and sumologic_collector_shell_args %}{{ sumologic_collector_shell_args }}{% endif %}\""
+  win_shell: "Start-Process -Wait -FilePath {{ sumo_win_temp | default('C:\\Windows\\Temp') }}\\SumoCollector.exe -ArgumentList \"-q -console -Vsumo.token_and_url={{ sumo_token }}{% if sumo_sources|string %} -Vsources={{ sumo_win_temp | default('C:\\Windows\\Temp') }}\\{{ sumo_sources | win_basename }}{% endif %} {% if sumologic_collector_shell_args is defined and sumologic_collector_shell_args %}{{ sumologic_collector_shell_args }}{% endif %}\""
   args:
     creates: C:\Program Files\Sumo Logic Collector\uninstall.exe
 
