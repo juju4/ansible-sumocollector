@@ -27,3 +27,8 @@ ephemeral={{ sumologic_collector_ephemeral }}
 {% if sumologic_collector_clobber is defined and sumologic_collector_clobber != "" %}
 clobber={{ sumologic_collector_clobber }}
 {% endif %}
+{% if sumologic_collector_settings is defined and sumologic_collector_settings != [] %}
+{% for item in sumologic_collector_settings %}
+{{ item.key }}={{ item.value }}
+{% endfor %}
+{% endif %}
