@@ -29,6 +29,6 @@ clobber={{ sumologic_collector_clobber }}
 {% endif %}
 {% if sumologic_collector_settings is defined and sumologic_collector_settings != [] %}
 {% for item in sumologic_collector_settings %}
-{{ item.key }}={{ item.value }}
+{{ item.k }}={{ item.v }}
 {% endfor %}
 {% endif %}

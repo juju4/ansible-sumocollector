@@ -88,7 +88,7 @@
 
 - name: 'Create collector configuration'
   template:
-    src: collector.json.j2
+    src: "{{ sumologic_collector_source_template }}"
     dest: /etc/sumologic-collector.json
   tags: [sumologic, sumologic-collector]
   notify: Restart SumoCollector
