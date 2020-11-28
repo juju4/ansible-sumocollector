@@ -23,7 +23,7 @@
     mode: 0700
     owner: "{{ sumologic_config_dir_owner }}"
   tags: [sumologic, sumologic-collector]
-  notify: Restart SumoCollector
+  notify: Stop SumoCollector
   with_items:
     - sumo-perf-script.sh
     - user.properties
@@ -91,7 +91,7 @@
     src: "{{ sumologic_collector_source_template }}"
     dest: /etc/sumologic-collector.json
   tags: [sumologic, sumologic-collector]
-  notify: Restart SumoCollector
+  notify: Stop SumoCollector
   when: sumologic_single_source_file == "yes"
 
 - name: 'Ensure sumo sources directory exists'
@@ -163,7 +163,7 @@
   changed_when: false
   tags: [sumologic, sumologic-collector, sumologic_force_restart]
   when: (sumologic_force_restart == "yes") and (sumologic_install_method == "docker")
-  notify: 'Restart SumoCollector'
+  notify: 'Stop SumoCollector'
 
 - name: 'Install SumoCollector apt'
   apt:
@@ -171,7 +171,7 @@
     state: present
   when: ansible_os_family == "Debian"
   tags: sumologic
-  notify: Restart SumoCollector
+  notify: Stop SumoCollector
   register: pkg_result
   until: pkg_result is success
 
@@ -181,4 +181,4 @@
     state: present
   when: ansible_os_family == "RedHat"
   tags: sumologic
-  notify: Restart SumoCollector
+  notify: Stop SumoCollector

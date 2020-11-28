@@ -39,5 +39,5 @@
       args:
         creates: /etc/init.d/collector
       notify:
-        - Restart SumoCollector
+        - Stop SumoCollector
   when: not svcfile.stdout

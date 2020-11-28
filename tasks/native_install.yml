@@ -39,7 +39,7 @@
     state: present
   when: ( sumologic_collector_deb_check.rc == 1 ) and ( ansible_os_family == "Debian" )
   tags: sumologic
-  notify: Restart SumoCollector
+  notify: Stop SumoCollector
   register: pkg_result
   until: pkg_result is success
 
@@ -65,7 +65,7 @@
     disable_gpg_check: "{{ sumologic_installer_rpm_disablegpgcheck | default(false) }}"
   when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" )
   tags: [sumologic, sumologic_force_restart]
-  notify: Restart SumoCollector
+  notify: Stop SumoCollector
   register: pkg_result
   until: pkg_result is success
 
