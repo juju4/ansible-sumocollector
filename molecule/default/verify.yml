@@ -9,7 +9,7 @@
       manager: auto
   - debug:
       msg: "{{ ansible_facts.packages }}"
-      verbosity: 2
+      verbosity: 3
   - debug:
       msg: "{{ ansible_facts.packages['sumocollector'] }}"
       verbosity: 1
