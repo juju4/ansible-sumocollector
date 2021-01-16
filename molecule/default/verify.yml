@@ -11,12 +11,12 @@
       msg: "{{ ansible_facts.packages }}"
       verbosity: 2
   - debug:
-      msg: "{{ ansible_facts.packages['SumoCollector'] }}"
+      msg: "{{ ansible_facts.packages['sumocollector'] }}"
       verbosity: 1
   - name: Validate SumoCollector package is present
     assert:
       that: >
-        ansible_facts.packages['SumoCollector'] is defined
+        ansible_facts.packages['sumocollector'] is defined
 
   - name: Fetch content of /opt/SumoCollector/config/user.properties
     slurp:
