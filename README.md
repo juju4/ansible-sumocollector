@@ -1,5 +1,9 @@
 [![Build Status - Master](https://travis-ci.com/juju4/ansible-sumocollector.svg?branch=master)](https://travis-ci.com/juju4/ansible-sumocollector)
 [![Build Status - Devel](https://travis-ci.com/juju4/ansible-sumocollector.svg?branch=devel)](https://travis-ci.com/juju4/ansible-sumocollector/branches)
+
+[![Actions Status - Master](https://github.com/juju4/ansible-sumocollector/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-sumocollector/actions?query=branch%3Amaster)
+[![Actions Status - Devel](https://github.com/juju4/ansible-sumocollector/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-sumocollector/actions?query=branch%3Adevel)
+
 # SumoCollector
 
 Ansible role to install SumoCollector. This role was based on wgregorian as recommended by Sumo staff and modcloth's role inspiration.  That was a native install using yum.  
