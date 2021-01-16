@@ -8,6 +8,9 @@
     package_facts:
       manager: auto
   - debug:
+      msg: "{{ ansible_facts.packages }}"
+      verbosity: 2
+  - debug:
       msg: "{{ ansible_facts.packages['SumoCollector'] }}"
       verbosity: 1
   - name: Validate SumoCollector package is present
