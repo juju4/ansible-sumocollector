@@ -1,55 +1,100 @@
 ---
-dist: xenial
 sudo: required
 rvm:
   - 2.6
 
-env:
-  - distribution: centos
-    version: 8
-    suite: default
-    ANSIBLE_EXTRA_FLAGS: "'-e sumologic_installer_rpm_disablegpgcheck=true'"
-  - distribution: centos
-    version: 7
-    suite: default
-  - distribution: ubuntu
-    version: 20.04
-    suite: default
-  - distribution: ubuntu
-    version: 18.04
-    suite: default
-  - distribution: debian
-    version: 10
-    suite: default
-  - distribution: debian
-    version: 9
-    suite: default
-  - distribution: centos
-    version: 8
-    suite: default-runas
-    ANSIBLE_EXTRA_FLAGS: "'-e sumologic_installer_rpm_disablegpgcheck=true'"
-  - distribution: ubuntu
-    version: 20.04
-    suite: default-runas
-  - distribution: ubuntu
-    version: 18.04
-    suite: default-runas
-  - distribution: debian
-    version: 10
-    suite: default-runas
-  ## failing in kitchen/docker, ok kitchen/vagrant: ernestas-poskus.docker : Ensure docker service is enabled
-  # - distribution: centos
-  #   version: 7
-  #   suite: default-docker
-  - distribution: ubuntu
-    version: 20.04
-    suite: default-docker
-  - distribution: ubuntu
-    version: 18.04
-    suite: default-docker
-  - distribution: debian
-    version: 10
-    suite: default-docker
+jobs:
+  include:
+    - stage: ansible-lint
+      name: Ansible Lint
+      before_install:
+        - pip3 install ansible-lint
+      script:
+        - ansible-lint tasks/main.yml || true
+      after_script: true
+    - stage: deploy
+      name: Deploy on Ubuntu Focal
+      env:
+        - distribution: ubuntu
+          version: 20.04
+          suite: default
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
+    - stage: deployalt
+      name: Centos 8
+      env:
+        - distribution: centos
+          version: 8
+          suite: default
+          ANSIBLE_EXTRA_FLAGS: "'-e sumologic_installer_rpm_disablegpgcheck=true'"
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
+    - stage: deployalt
+      name: Centos 7
+      env:
+        - distribution: centos
+          version: 7
+          suite: default
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
+    - stage: deployalt
+      name: Ubuntu 18.04
+      env:
+        - distribution: ubuntu
+          version: 18.04
+          suite: default
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
+    - stage: deployalt
+      name: Ubuntu 16.04
+      env:
+        - distribution: ubuntu
+          version: 16.04
+          suite: default
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
+    - stage: deployalt
+      name: Debian 10
+      env:
+        - distribution: debian
+          version: 10
+          suite: default
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
+    - stage: deploy-runas
+      name: Centos 8
+      env:
+        - distribution: centos
+          version: 8
+          suite: default-runas
+          ANSIBLE_EXTRA_FLAGS: "'-e sumologic_installer_rpm_disablegpgcheck=true'"
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
+    - stage: deploy-runas
+      name: Ubuntu 20.04
+      env:
+        - distribution: ubuntu
+          version: 20.04
+          suite: default-runas
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
+    - stage: deploy-docker
+      name: Centos 8
+      env:
+        - distribution: centos
+          version: 8
+          suite: default-docker
+          ANSIBLE_EXTRA_FLAGS: "'-e sumologic_installer_rpm_disablegpgcheck=true'"
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
+    - stage: deploy-docker
+      name: Ubuntu 20.04
+      env:
+        - distribution: ubuntu
+          version: 20.04
+          suite: default-docker
+      script:
+        - sudo -E su $USER -c "env PATH=$PATH kitchen verify ${suite}-${distribution}-${version//./} -l debug"
 
 before_install:
   - env
