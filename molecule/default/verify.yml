@@ -50,9 +50,9 @@
       url: https://collectors.sumologic.com
       return_content: yes
     register: curl1
-    environment:
-      http_proxy: "http://localhost:{{ proxy_port }}"
-      https_proxy: "http://localhost:{{ proxy_port }}"
+    # environment:
+    #   http_proxy: "http://localhost:{{ proxy_port }}"
+    #   https_proxy: "http://localhost:{{ proxy_port }}"
     changed_when: false
   - name: Validate curl1 output
     assert:
