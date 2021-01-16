@@ -1,0 +1,58 @@
+---
+
+- name: Verify
+  hosts: collector
+  tasks:
+
+  - name: Gather package facts
+    package_facts:
+      manager: auto
+  - debug:
+      msg: "{{ ansible_facts.packages['SumoCollector'] }}"
+      verbosity: 1
+  - name: Validate SumoCollector package is present
+    assert:
+      that: >
+        ansible_facts.packages['SumoCollector'] is defined
+
+  - name: Fetch content of /opt/SumoCollector/config/user.properties
+    slurp:
+      src: /opt/SumoCollector/config/user.properties
+    register: userp
+  - name: Validate user.properties
+    assert:
+      that: >
+        "'accessid' in userp['content'] | b64decode and
+        'accesskey' in userp['content'] | b64decode"
+
+  - name: Fetch content of /opt/SumoCollector/logs/collector.log
+    slurp:
+      src: /opt/SumoCollector/logs/collector.log
+    register: log
+  - name: Validate collector.log
+    assert:
+      that: >
+        "'com.sumologic.util.scala.configuration.AssemblyBootstrapConfigurationFactory - Loaded configuration file:' in log['content'] | b64decode"
+
+  - name: Fetch content of /opt/SumoCollector/logs/collector.out.log
+    slurp:
+      src: /opt/SumoCollector/logs/collector.out.log
+    register: outlog
+  - name: Validate collector.out.log
+    assert:
+      that: >
+        "'--> Wrapper Started as Daemon' in log['content'] | b64decode"
+
+  - name: Test https://collectors.sumologic.com access
+    uri:
+      url: https://collectors.sumologic.com
+      return_content: yes
+    register: curl1
+    environment:
+      http_proxy: "http://localhost:{{ proxy_port }}"
+      https_proxy: "http://localhost:{{ proxy_port }}"
+    changed_when: false
+  - name: Validate curl1 output
+    assert:
+      that: >
+        "'Tweep' in curl1.content and curl1.status == 200"
