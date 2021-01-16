@@ -18,56 +18,58 @@
   tags: [sumologic, sumologic_token_installer]
   when: sumologic_token_installer is defined and not (ansible_os_family == "Debian" or ansible_os_family == "RedHat")
 
-- name: 'Check for SumoCollector on Debian'
-  command: dpkg-query -l sumocollector
-  register: sumologic_collector_deb_check
-  failed_when: no
-  changed_when: false
-  tags: [sumologic, sumologic_force_restart]
+- block:
+    - name: 'Check for SumoCollector on Debian'
+      command: dpkg-query -l sumocollector
+      register: sumologic_collector_deb_check
+      failed_when: no
+      changed_when: false
+      tags: [sumologic, sumologic_force_restart]
+
+    - name: 'Download SumoCollector for Debian'
+      get_url:
+        url: '{{ sumocollector_installer_download }}'
+        dest: '{{ sumologic_installer_remote_file }}'
+      when: ( sumologic_collector_deb_check.rc == 1 ) and ( ansible_os_family == "Debian" )
+      tags: [sumologic, sumologic_force_restart]
+
+    - name: 'Install SumoCollector for Debian'
+      apt:
+        deb: '{{ sumologic_installer_remote_file }}'
+        state: present
+      when: ( sumologic_collector_deb_check.rc == 1 ) and ( ansible_os_family == "Debian" )
+      tags: sumologic
+      notify: Restart SumoCollector
+      register: pkg_result
+      until: pkg_result is success
   when: ansible_os_family == "Debian"
 
-- name: 'Download SumoCollector for Debian'
-  get_url:
-    url: '{{ sumocollector_installer_download }}'
-    dest: '{{ sumologic_installer_remote_file }}'
-  when: ( sumologic_collector_deb_check.rc == 1 ) and ( ansible_os_family == "Debian" )
-  tags: [sumologic, sumologic_force_restart]
+- block:
+    - name: 'Check for SumoCollector on RedHat'
+      command: yum list *sumo_collector*  # noqa 303
+      register: sumologic_collector_yum_check
+      failed_when: no
+      changed_when: false
+      tags: [sumologic, sumologic_force_restart]
 
-- name: 'Install SumoCollector for Debian'
-  apt:
-    deb: '{{ sumologic_installer_remote_file }}'
-    state: present
-  when: ( sumologic_collector_deb_check.rc == 1 ) and ( ansible_os_family == "Debian" )
-  tags: sumologic
-  notify: Restart SumoCollector
-  register: pkg_result
-  until: pkg_result is success
+    - name: 'Download SumoCollector redhat'
+      get_url:
+        url: '{{ sumocollector_installer_rpm }}'
+        dest: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
+      when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" )
+      tags: [sumologic, sumologic_force_restart]
 
-- name: 'Check for SumoCollector on RedHat'
-  command: yum list *sumo_collector*  # noqa 303
-  register: sumologic_collector_yum_check
-  failed_when: no
-  changed_when: false
-  tags: [sumologic, sumologic_force_restart]
+    - name: 'Install SumoCollector redhat'
+      yum:
+        name: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
+        state: present
+        disable_gpg_check: "{{ sumologic_installer_rpm_disablegpgcheck | default(false) }}"
+      when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" )
+      tags: [sumologic, sumologic_force_restart]
+      notify: Restart SumoCollector
+      register: pkg_result
+      until: pkg_result is success
   when: ansible_os_family == "RedHat"
-
-- name: 'Download SumoCollector redhat'
-  get_url:
-    url: '{{ sumocollector_installer_rpm }}'
-    dest: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
-  when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" )
-  tags: [sumologic, sumologic_force_restart]
-
-- name: 'Install SumoCollector redhat'
-  yum:
-    name: '{{ sumologic_installer_rpm_local_folder }}/sumo_collector.rpm'
-    state: present
-    disable_gpg_check: "{{ sumologic_installer_rpm_disablegpgcheck | default(false) }}"
-  when: ( sumologic_collector_yum_check.rc == 1 ) and ( ansible_os_family == "RedHat" )
-  tags: [sumologic, sumologic_force_restart]
-  notify: Restart SumoCollector
-  register: pkg_result
-  until: pkg_result is success
 
 - include: native_runas.yml
   when: sumologic_collector_user != 'root'
