@@ -16,6 +16,8 @@
     owner: "{{ sumologic_config_dir_owner }}"
   tags: [sumologic, sumologic-collector]
 
+# task can't be idempotent
+# after service start, user.properties is sanitized and accesskey automatically removed
 - name: 'Template SumoCollector files'
   template:
     src: "{{ item }}"

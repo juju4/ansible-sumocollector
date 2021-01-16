@@ -26,3 +26,10 @@ scenario:
   name: default
 verifier:
   name: ansible
+test_sequence:
+  - destroy
+  - create
+  - converge
+  # - idempotence
+  - lint
+  - verify
