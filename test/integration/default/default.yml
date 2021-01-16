@@ -1,7 +1,5 @@
 ---
 
 - hosts: all
-#  vars:
-#    - a:
   roles:
     - wgregorian.sumocollector

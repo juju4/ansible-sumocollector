@@ -12,6 +12,7 @@
   file:
     path: "{{ sumologic_collector_root }}"
     owner: "{{ sumologic_collector_user }}"
+    mode: '0755'
     recurse: yes
     state: directory
 
@@ -32,6 +33,7 @@
         dest: "{{ sumologic_collector_root }}/collector"
         regexp: '^#RUN_AS_USER=.*'
         replace: "RUN_AS_USER={{ sumologic_collector_user }}"
+        mode: '0644'
         backup: yes
 
     - name: Install collector service

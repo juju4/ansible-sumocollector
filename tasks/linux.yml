@@ -55,6 +55,7 @@
   template:
     src: etc_cron.d_disk
     dest: /etc/cron.d/disk
+    mode: '0644'
 
 - name: 'Check for SumoCollector'
   command: dpkg-query -l sumocollector
@@ -90,6 +91,7 @@
   template:
     src: collector.json.j2
     dest: /etc/sumologic-collector.json
+    mode: '0644'
   tags: [sumologic, sumologic-collector]
   notify: Restart SumoCollector
   when: sumologic_single_source_file == "yes"
@@ -98,6 +100,7 @@
   file:
     state: directory
     dest: "{{ sumologic_sources_dir }}"
+    mode: '0755'
   tags: [sumologic, sumologic-collector]
   when: sumologic_single_source_file != "yes"
 
@@ -105,6 +108,7 @@
   file:
     state: directory
     dest: "{{ sumologic_host_dir }}"
+    mode: '0755'
   tags: [sumologic, sumologic-collector]
 
 - block:
@@ -112,6 +116,7 @@
       template:
         src: sources/{{ item | basename }}
         dest: "{{ sumologic_sources_dir }}"
+        mode: '0644'
       tags: [sumologic, sumologic-collector]
       with_fileglob: ../templates/sources/*
   when: sumologic_single_source_file != "yes" and not sumologic_single_source_file
@@ -136,8 +141,8 @@
     sysctl_set: yes
     reload: yes
   with_items:
-   - { n: 'net.core.wmem_max', v: 8388608 }
-   - { n: 'net.core.rmem_max', v: 8388608 }
+    - { n: 'net.core.wmem_max', v: 8388608 }
+    - { n: 'net.core.rmem_max', v: 8388608 }
   tags: [sumologic, sumologic-collector]
   when: >
     (ansible_virtualization_type is not defined or
