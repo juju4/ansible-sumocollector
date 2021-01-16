@@ -27,5 +27,9 @@
       when: >
         (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 16) or
         (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 8)
+    - name: Redhat | Disable GPG check
+      set_fact:
+        sumologic_installer_rpm_disablegpgcheck: true
+      when: ansible_os_family == "RedHat"
   roles:
     - wgregorian.sumocollector
