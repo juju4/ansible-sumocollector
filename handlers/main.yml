@@ -1,6 +1,6 @@
 ---
 
-- name: Restart SumoCollector
+- name: Stop SumoCollector
   service:
     name: "{{ sumologic_collector_service_name }}"
     state: stopped

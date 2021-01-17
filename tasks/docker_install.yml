@@ -19,7 +19,7 @@
     dest: "{{ syslog_units_directory }}/sumologic-collector.service"
     mode: 0700
   notify:
-    - Restart SumoCollector
+    - Stop SumoCollector
   tags: [sumologic, sumologic_docker]
 
 - name: install systemd unit for journalctl to customize docker jounald logs

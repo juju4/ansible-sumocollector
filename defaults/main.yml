@@ -46,10 +46,10 @@ sumocollector_installer_download: "https://collectors.sumologic.com/rest/downloa
 sumologic_collector_accessid: "{{ lookup('env', 'SUMO_COLLECTOR_ACCESS_ID') }}"
 sumologic_collector_accesskey: "{{ lookup('env', 'SUMO_COLLECTOR_ACCESS_KEY') }}"
 # or url+token
-# sumologic_collector_settings:
-#   - { k: url, v: xxx }
-#   - { k: token, v: xxx }
-#   - { k: description, v: xxx }
+#sumologic_collector_settings:
+#  - { k: url, v: xxx }
+#  - { k: token, v: xxx }
+#  - { k: description, v: xxx }
 
 # Collection of logs should be index-aware placing logs likely to be searched together
 # into the same index.
