@@ -13,10 +13,16 @@
   - debug:
       msg: "{{ ansible_facts.packages['sumocollector'] }}"
       verbosity: 1
-  - name: Validate SumoCollector package is present
+  - name: Debian | Validate SumoCollector package is present
     assert:
       that: >
         ansible_facts.packages['sumocollector'] is defined
+    when: ansible_os_family == "Debian"
+  - name: RedHat | Validate SumoCollector package is present
+    assert:
+      that: >
+        ansible_facts.packages['SumoCollector'] is defined
+    when: ansible_os_family == "RedHat"
 
   - name: Fetch content of /opt/SumoCollector/config/user.properties
     slurp:
