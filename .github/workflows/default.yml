@@ -41,6 +41,8 @@ jobs:
           pip install molecule[docker] ansible-lint flake8 testinfra ansible
           ansible --version
           ansible-lint --version
+          mkdir -p $HOME/.ansible/roles && ln -s $GITHUB_WORKSPACE/wgregorian.sumocollector $HOME/.ansible/roles/
+          mkdir -p $HOME/.cache/molecule/wgregorian.sumocollector/default && ln -s $HOME/.ansible/roles $HOME/.cache/molecule/wgregorian.sumocollector/default/roles
       - name: Environment
         run: |
           pwd
