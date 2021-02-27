@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: sumocollector
   author: William Gregorian
   description: Ansible Role to instal SumoLogic SumoCollector
   company: Omada Health
