@@ -21,4 +21,5 @@
   win_shell: dir "C:\Program Files\Sumo Logic Collector"
   register: dir
   changed_when: false
-- debug: var=dir.stdout_lines
+- name: Debug | dir output
+  debug: var=dir.stdout_lines

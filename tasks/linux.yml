@@ -135,7 +135,8 @@
   when: sumologic_install_method == "docker"
   tags: [sumologic, sumologic-collector]
 
-- debug:
+- name: Debug | ansible_virtualization_type
+  debug:
     var: ansible_virtualization_type
     verbosity: 1
 - name: 'Set udp limits for sumo (native and inherited by container)'

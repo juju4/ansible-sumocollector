@@ -7,10 +7,12 @@
   - name: Gather package facts
     package_facts:
       manager: auto
-  - debug:
+  - name: Debug | packages facts
+    debug:
       msg: "{{ ansible_facts.packages }}"
       verbosity: 3
-  - debug:
+  - name: Debug | sumocollector package facts
+    debug:
       msg: "{{ ansible_facts.packages['sumocollector'] }}"
       verbosity: 1
     ignore_errors: true
