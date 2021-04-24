@@ -8,7 +8,7 @@ jobs:
     - stage: ansible-lint
       name: Ansible Lint
       before_install:
-        - sudo apt-get -y install python3-pip
+        - sudo apt-get -y install python3-pip python3-setuptools
         - pip3 install ansible-lint
       script:
         - ansible-lint tasks/main.yml || true
