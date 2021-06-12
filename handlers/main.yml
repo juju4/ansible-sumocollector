@@ -26,7 +26,7 @@
   tags: [sumologic, sumologic-collector]
   changed_when: True
   ## for CI testing with invalid credentials
-  ignore_errors: true
+  failed_when: false
 
 - name: Restart journalctl_syslog service
   service:

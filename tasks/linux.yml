@@ -36,7 +36,6 @@
   command: "{{ sumologic_collector_root }}/collector stop"
   tags: [sumologic, sumologic-collector]
   when: sumologic_remove_tar_install == "yes"
-  ignore_errors: yes
 
 - name: 'Optionally delete tar install'
   file:
@@ -44,14 +43,12 @@
     dest: /opt/SumoCollector
   tags: [sumologic, sumologic-collector]
   when: sumologic_remove_tar_install == "yes"
-  ignore_errors: yes
 
 - name: 'Optionally delete yum install'
   yum:
     state: absent
   tags: [sumologic, sumologic-collector]
   when: sumologic_remove_yum_install == "yes"
-  ignore_errors: yes
 
 - name: 'Template cron for disk stats'
   template:
