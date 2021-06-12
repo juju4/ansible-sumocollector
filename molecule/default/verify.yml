@@ -11,11 +11,6 @@
     debug:
       msg: "{{ ansible_facts.packages }}"
       verbosity: 3
-  - name: Debug | sumocollector package facts
-    debug:
-      msg: "{{ ansible_facts.packages['sumocollector'] }}"
-      verbosity: 1
-    failed_when: false
   - name: Debian | Validate SumoCollector package is present
     assert:
       that: >
