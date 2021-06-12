@@ -6,7 +6,7 @@
 
 # SumoCollector
 
-Ansible role to install SumoCollector. This role was based on wgregorian as recommended by Sumo staff and modcloth's role inspiration.  That was a native install using yum.  
+Ansible role to install SumoCollector. This role was based on wgregorian as recommended by Sumo staff and modcloth's role inspiration.  That was a native install using yum.
 We now support yum, tarball and docker installs.  Hot patches would likely be first available via tarball for testing bugfixes with sumologic team.
 
 # Role Variables
@@ -40,7 +40,7 @@ sumologic_collector_accessid: "{{ lookup('env','sumologic_collector_accessid') }
 sumologic_collector_accesskey: "{{ lookup('env','sumologic_collector_accesskey') }}"
 ```
 
-## Allow overwrite of old collectors. 
+## Allow overwrite of old collectors.
 - See: https://service.sumologic.com/help/Default.htm#Using_Clobber.htm
 ```
 sumologic_collector_clobber: ""
@@ -71,7 +71,7 @@ sumologic_collector_application_log_path:
   - name: "APP LOG"
     path: "/var/log/APP.log"
     use_multiline: false
-    category: "APP" 
+    category: "APP"
 ```
 
 # Examples
@@ -148,4 +148,3 @@ MIT
 * William Gregorian - CISO, FutureAdvisor.
 * Kesten Broughton - Sr. Devops Engineer, CognitiveScale
 * Juju4
-

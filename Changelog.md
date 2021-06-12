@@ -24,7 +24,7 @@ Having extra files in /etc/sumo/sumo.d is not a problem.  If path is not found
 sumo blade will not load.  Sumo watches the sourcefile or folder so changes
 should be taken up automatically without restarting the process.
 
-Currently only the docker install method is fully supported.  
+Currently only the docker install method is fully supported.
 The yum install seems to lag behind docker and tarball versions
 and sumo support recommended the tar or docker install.
 The docker container closely resembles the tar install (/opt/SumoCollector).

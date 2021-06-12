@@ -6,4 +6,4 @@
       "pathExpression": "/var/log/audit/*",
       "category": "{{ deployment_id }}/os/access"
      }
-} 
+}

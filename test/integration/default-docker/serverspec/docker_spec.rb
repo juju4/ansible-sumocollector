@@ -18,4 +18,3 @@ describe service('docker') do
 ## Note: will failed inside kitchen/docker
 #  it { should be_running }
 end
-

@@ -6,12 +6,12 @@
         "filterType": "Exclude",
         "name": "kubernetes",
         "regexp": ".*kube.*"
-        }, 
+        },
         {
           "filterType": "Exclude",
           "name": "RPC request for DC",
           "regexp": ".*RPC\\srequest\\sfor\\DC.*"
-        }, 
+        },
         {
           "filterType": "Exclude",
           "name": "no path to datacenter",
@@ -21,7 +21,7 @@
           "filterType": "Exclude",
           "name": "journald docker logs",
           "regexp": ".*journal:.*"
-        }, 
+        },
         {
           "filterType": "Exclude",
           "name": "etcd",

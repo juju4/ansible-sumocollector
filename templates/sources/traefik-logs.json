@@ -6,4 +6,4 @@
       "pathExpression": "/var/log/traefik/*.log*",
       "category": "{{ deployment_id }}/infra/traefik"
      }
-} 
+}

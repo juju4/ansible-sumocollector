@@ -46,4 +46,3 @@ end
 #  its(:stdout) { should_not match /FATAL/ }
 #  its(:exit_status) { should eq 0 }
 #end
-
